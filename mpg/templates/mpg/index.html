@@ -1,0 +1,8 @@
+{% for vehicle in vehicles %}
+<h3>{{ vehicle.name }}</h3>
+<ul>
+  {% for fuelup in vehicle.fuelup_set.all %}
+  <li>Miles: {{ fuelup.miles }}</li>
+  {% endfor %}
+</ul>
+{% endfor %}
