@@ -15,6 +15,18 @@ class Model(models.Model):
   def __str__(self):
     return self.name
 
+  def average_mpg(self):
+    vehicles = self.vehicle_set.all()
+    
+    fuel_ups = []
+    for vehicle in vehicles:
+      fuel_ups.extend(vehicle.fuelup_set.all())
+
+    if not fuel_ups:
+      return 0
+
+    return sum([fu.miles for fu in fuel_ups]) / sum([fu.gallons for fu in fuel_ups])
+
 class Vehicle(models.Model):
   model = models.ForeignKey(Model)
   year = models.IntegerField()

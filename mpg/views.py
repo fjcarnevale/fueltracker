@@ -13,3 +13,9 @@ def model(request, model_name):
   model = Model.objects.get(name__exact=model_name)
   context = {'model':model}
   return render(request, 'mpg/model.html', context)
+
+
+def make(request, make_name):
+  make = Make.objects.get(name__exact=make_name)
+  context = {'make':make}
+  return render(request, 'mpg/make.html', context)

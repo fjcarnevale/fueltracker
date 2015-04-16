@@ -1,0 +1,9 @@
+{% load humanize %}
+
+<h3><a href="/mpg">All</a> > {{ make.name }}</h3>
+<ul>
+  {% for model in make.model_set.all %}
+  <li>{{ model.name }} -- {{ model.average_mpg|floatformat:2 }} mpg</li>
+  {% endfor %}
+</ul>
+
