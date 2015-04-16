@@ -1,8 +1,8 @@
-{% for vehicle in vehicles %}
-<h3>{{ vehicle.name }}</h3>
+{% for make in makes %}
+<h3>{{ make.name }}</h3>
 <ul>
-  {% for fuelup in vehicle.fuelup_set.all %}
-  <li>Miles: {{ fuelup.miles }}</li>
+  {% for model in make.model_set.all %}
+  <li><a href="/mpg/model/{{ model.name }}">{{ model.name }}</a></li>
   {% endfor %}
 </ul>
 {% endfor %}

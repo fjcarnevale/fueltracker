@@ -1,0 +1,7 @@
+<h3>{{ model.name }}</h3>
+<ul>
+  {% for vehicle in model.vehicle_set.all %}
+  <li>{{ vehicle.name }}</li>
+  {% endfor %}
+</ul>
+
