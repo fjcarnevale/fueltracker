@@ -1,0 +1,12 @@
+<h3>
+    <a href="/mpg">All</a> > 
+    <a href="/mpg/make/{{ vehicle.model.make.name }}">{{ vehicle.model.make.name}}</a> > 
+    <a href="/mpg/model/{{ vehicle.model.name }}">{{ vehicle.model.name }}</a>
+</h3>
+<h4>{{ vehicle.name }}</h4>
+<ul>
+  {% for fuelup in vehicle.fuelup_set.all %}
+  <li>{{ fuelup.date }} -- {{ fuelup.miles }} -- {{ fuelup.mpg }} mpg</li>
+  {% endfor %}
+</ul>
+

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404,render
 
 from .models import Make, Model, Vehicle, FuelUp
 
@@ -19,3 +19,9 @@ def make(request, make_name):
   make = Make.objects.get(name__exact=make_name)
   context = {'make':make}
   return render(request, 'mpg/make.html', context)
+
+
+def vehicle(request, vehicle_id):
+  vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
+  context = {'vehicle':vehicle}
+  return render(request, 'mpg/vehicle.html', context)

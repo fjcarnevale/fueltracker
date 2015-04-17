@@ -44,3 +44,6 @@ class FuelUp(models.Model):
 
   def __str__(self):
     return "%.2f gal at $%.2f: %.1f MPG" % (self.gallons, self.cost, self.miles / self.gallons)
+
+  def mpg(self):
+    return self.miles / self.gallons
