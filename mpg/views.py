@@ -25,3 +25,13 @@ def vehicle(request, vehicle_id):
   vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
   context = {'vehicle':vehicle}
   return render(request, 'mpg/vehicle.html', context)
+
+def addMake(request):
+  make_name = request.POST['make']
+  
+  if not len(Make.objects.filter(name=make_name)):
+    make = Make()
+    make.name = make_name
+    make.save()
+    
+  

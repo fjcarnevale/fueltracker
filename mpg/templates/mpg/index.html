@@ -1,8 +1,16 @@
 {% for make in makes %}
-<h3><a href="/mpg/make/{{ make.name }}">{{ make.name }}</a></h3>
+<h3><a href="{% url 'make' make.name %}">{{ make.name }}</a></h3>
 <ul>
   {% for model in make.model_set.all %}
-  <li><a href="/mpg/model/{{ model.name }}">{{ model.name }}</a></li>
+  <li><a href="{% url 'model'  model.name %}">{{ model.name }}</a></li>
   {% endfor %}
 </ul>
 {% endfor %}
+
+<h4>Add a Make</h4>
+<form action="{% url 'addMake' %}" method="post">
+  {% csrf_token %} 
+  <label for="make">New Make</label>
+  <input type="text" name="make" id="make"/>
+  <input type="submit" value="Add"/>
+</form>
