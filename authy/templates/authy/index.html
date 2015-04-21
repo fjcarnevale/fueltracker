@@ -1,0 +1,11 @@
+<h3>Sign Up</h3>
+
+<form action="{% url 'signup' %}" method="POST">
+
+  {% csrf_token %}
+  <input type="text" placeholder="Username" name="username"/><br />
+  <input type="password" placeholder="Password" name="password" /><br />
+  <input type="submimt" value="Submit" /> 
+</form>
+
+
