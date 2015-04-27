@@ -1,13 +1,47 @@
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404,render
+from django.core.urlresolvers import reverse
 
 from .models import Make, Model, Vehicle, FuelUp
 
 # Create your views here.
 
 def index(request):
-  context = {'makes':Make.objects.all()}
+  if request.user.is_authenticated():
+    user = request.user
+  else:
+    user = None
+
+  context = {'user':user, 'makes':Make.objects.all()}
   return render(request, 'mpg/index.html', context)
 
+def login_user(request):
+  username = request.POST['username']
+  password = request.POST['password']
+
+  user = authenticate(username=username, password=password)
+
+  if user is not None:
+    if user.is_active:
+      login(request, user)  
+
+  return HttpResponseRedirect(reverse('index'))
+
+
+def register(request):
+  username = request.POST['username']
+  email = request.POST['email']
+  password = request.POST['password']
+
+  user = User.objects.create_user(username, email, password)
+
+  if user is not None:
+    if user.is_active:
+      login(request, user)
+
+  return HttpResponseRedirect(reverse('index'))
 
 def model(request, model_name):
   model = Model.objects.get(name__exact=model_name)
