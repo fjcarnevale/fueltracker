@@ -8,6 +8,8 @@ urlpatterns = [
   url(r'^make/(?P<make_name>[a-zA-Z]+)$', views.make, name='make'),
   url(r'^vehicle/(?P<vehicle_id>[0-9]+)$', views.vehicle, name='vehicle'),
   url(r'^login_user$', views.login_user, name='login_user'),
+  url(r'^logout_user$', views.logout_user, name='logout_user'),
   url(r'^register$', views.register, name='register'),
+  url(r'^register_page$', views.register_page, name='register_page'),
   url(r'^addMake$', views.addMake, name='addMake'),
 ]

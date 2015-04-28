@@ -1,3 +1,5 @@
+{% include "mpg/includes/user_login.html" %}
+
 <h3><a href="/mpg">All</a> > <a href="/mpg/make/{{ model.make.name }}">{{ model.make.name}}</a> > {{ model.name }}</h3>
 <ul>
   {% for vehicle in model.vehicle_set.all %}

@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404,render
@@ -8,15 +8,13 @@ from .models import Make, Model, Vehicle, FuelUp
 
 # Create your views here.
 
-def index(request):
+def get_user(request):
   if request.user.is_authenticated():
     user = request.user
   else:
     user = None
-
-  context = {'user':user, 'makes':Make.objects.all()}
-  return render(request, 'mpg/index.html', context)
-
+  return user
+    
 def login_user(request):
   username = request.POST['username']
   password = request.POST['password']
@@ -25,9 +23,14 @@ def login_user(request):
 
   if user is not None:
     if user.is_active:
-      login(request, user)  
+      login(request, user)
 
   return HttpResponseRedirect(reverse('index'))
+  
+def logout_user(request):
+    logout(request)
+    
+    return HttpResponseRedirect(reverse('index'))
 
 
 def register(request):
@@ -36,6 +39,7 @@ def register(request):
   password = request.POST['password']
 
   user = User.objects.create_user(username, email, password)
+  user = authenticate(username=username, password=password)
 
   if user is not None:
     if user.is_active:
@@ -43,21 +47,33 @@ def register(request):
 
   return HttpResponseRedirect(reverse('index'))
 
+def register_page(request):
+  return render(request, 'mpg/register.html')
+
+def index(request):
+  user = get_user(request)
+  context = {'user':user, 'makes':Make.objects.all()}
+  return render(request, 'mpg/index.html', context)
+
+
 def model(request, model_name):
+  user = get_user(request)
   model = Model.objects.get(name__exact=model_name)
-  context = {'model':model}
+  context = {'user':user, 'model':model}
   return render(request, 'mpg/model.html', context)
 
 
 def make(request, make_name):
+  user = get_user(request)
   make = Make.objects.get(name__exact=make_name)
-  context = {'make':make}
+  context = {'user':user, 'make':make}
   return render(request, 'mpg/make.html', context)
 
 
 def vehicle(request, vehicle_id):
+  user = get_user(request)
   vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
-  context = {'vehicle':vehicle}
+  context = {'user':user,'vehicle':vehicle}
   return render(request, 'mpg/vehicle.html', context)
 
 def addMake(request):

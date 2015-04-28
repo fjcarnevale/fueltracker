@@ -1,16 +1,5 @@
 
-{% if user %}
-<h4>Hi {{ user.username }}!</h4>
-{% else %}
-<form action="{% url 'login_user' %}" method="POST">
-
-  {% csrf_token %}
-  
-  <input type="text" placeholder="Username" name="username"/><br />
-  <input type="password" placeholder="Password" name="password" /><br />
-  <input type="submit" value="Submit" /> 
-</form>
-{% endif %}
+{% include "mpg/includes/user_login.html" %}
 
 {% for make in makes %}
 <h3><a href="{% url 'make' make.name %}">{{ make.name }}</a></h3>
@@ -23,7 +12,7 @@
 
 <h4>Add a Make</h4>
 <form action="{% url 'addMake' %}" method="post">
-  {% csrf_token %} 
+  {% csrf_token %}
   <label for="make">New Make</label>
   <input type="text" name="make" id="make"/>
   <input type="submit" value="Add"/>
