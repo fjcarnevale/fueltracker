@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404,render
 from django.core.urlresolvers import reverse
 
-from .models import Make, Model, Vehicle, FuelUp
+from .models import MpgUser, Make, Model, Vehicle, FuelUp
 
 # Create your views here.
 
@@ -59,8 +59,15 @@ def register(request):
   email = request.POST['email']
   password = request.POST['password']
 
-  # Create and authenticate the user
+  # Create the user
   user = User.objects.create_user(username, email, password)
+  
+  # Create and save the MPG user
+  mpg_user = MpgUser()
+  mpg_user.user = user
+  mpg_user.save()
+  
+  # Authenticate the user
   user = authenticate(username=username, password=password)
 
   # Check that user was authenticated properly
